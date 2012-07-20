@@ -1,0 +1,31 @@
+﻿<Application 
+    x:Class="Mefeedia.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:nav="clr-namespace:System.Windows.Navigation;assembly=Microsoft.Phone">    
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <sys:String x:Key="AppName">Mefeedia</sys:String>
+        <sys:String x:Key="ImagesLocation">Assets/Images/</sys:String>
+        <nav:UriMapper x:Key="UriMapper">
+            <nav:UriMapper.UriMappings>
+                <nav:UriMapping Uri="/Search" MappedUri="/Views/search/Search.xaml"/>
+                <nav:UriMapping Uri="/Watch" MappedUri="/Views/watch/Watch.xaml"/>
+                <nav:UriMapping Uri="/Social" MappedUri="/Views/social/Social.xaml"/>
+                <nav:UriMapping Uri="/Player" MappedUri="/Views/player/Player.xaml"/>
+            </nav:UriMapper.UriMappings>
+        </nav:UriMapper>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>

@@ -1,0 +1,71 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Mefeedia.Views.watch.Default"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Mefeedia;component/Assets/Images/watch_background.png" Stretch="UniformToFill"/>            
+        </Grid.Background>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <Image Height="46" HorizontalAlignment="Left" Margin="12,12,0,0" Name="logo" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/Mefeedia;component/Assets/Images/logo.png" />
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Button BorderThickness="0" Content="back" FontFamily="Segoe WP Light" FontSize="50" Name="btnBack" Click="btnBack_Click" />
+                    <Button Content="next" BorderThickness="0" FontSize="50" FontFamily="Segoe WP Light" Margin="20, 0,0,0" Name="btnNext" Click="btnNext_Click" />
+                </StackPanel>
+                <StackPanel>
+                    <Image Name="imgThumb" Margin="10,10,10,10" Height="250"  Source="{Binding thumbnail}" Tap="imgThumb_Tap" />                                     
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Name="tbDescription" Margin="5,0,5,0" Text="Title of the video spread across 2 lines endi..." HorizontalAlignment="Center" FontSize="25" TextAlignment="Center" TextWrapping="Wrap" />
+                    <TextBlock Name="tbFriendlyDate" Margin="5,5,5,0" Text="2 months ago" HorizontalAlignment="Center" FontSize="25" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="like" BorderThickness="0" FontSize="40" FontFamily="Segoe WP Light" HorizontalAlignment="Stretch" Name="btnLike" Click="btnLike_Click" />
+                    <Button Content="facebook" BorderThickness="0" FontSize="40" FontFamily="Segoe WP Light" HorizontalAlignment="Stretch" Name="btnFacebook" Click="btnFacebook_Click" />
+                    <Button Content="twitter" BorderThickness="0" FontSize="40" FontFamily="Segoe WP Light" HorizontalAlignment="Stretch" Name="btnTwitter" Click="btnTwitter_Click" />
+                </StackPanel>
+                <StackPanel>
+                    <Button Content="watch later" BorderThickness="0" FontSize="40" FontFamily="Segoe WP Light" HorizontalAlignment="Stretch" Name="btnWatchLater" Click="btnWatchLater_Click" />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+ 
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

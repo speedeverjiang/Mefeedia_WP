@@ -1,0 +1,179 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Mefeedia.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728" 
+    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False" VerticalContentAlignment="Top">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+ 
+        <!--Panorama control-->
+        <controls:Panorama Name="mainPanorama">
+            <controls:Panorama.Background>
+                <ImageBrush ImageSource="PanoramaBackground.png"/>
+            </controls:Panorama.Background>
+
+            <controls:Panorama.Title>
+                <StackPanel Orientation="Vertical" Margin="0,80,0,0">
+                    <Image Height="46" HorizontalAlignment="Left" Margin="12,12,0,0" Name="logo" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/Mefeedia;component/Assets/Images/logo.png" />
+                </StackPanel>
+            </controls:Panorama.Title>            
+            
+            <!--Panorama item one-->
+            <controls:PanoramaItem Header="menu" Margin="0,0,-50,0" FontSize="12">
+                <!--Double line list with text wrapping-->
+                <ListBox  Margin="0,80,-12,0" ItemsSource="{Binding Items}"  SelectionChanged="MenuListBox_SelectionChanged" Name="menuListBox">
+                    <ListBox.ItemTemplate>
+                       <DataTemplate>
+                            <StackPanel Margin="0,0,0,2" Width="432" Height="78" Orientation="Horizontal">                                
+                                <Image Source="{Binding Icon}" Width="28" Margin="30, 0, 0, 0" Stretch="Uniform" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Itemname}" TextWrapping="Wrap" Margin="20, 10, 0, 0" Style="{StaticResource PhoneTextSubtleStyle}" FontSize="40" FontWeight="Bold" FontFamily="Segoe WP Semibold" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+
+            <!--Panorama item two-->
+            <controls:PanoramaItem Header="watch" Margin="0,0,-50,0" FontSize="12">
+                <ListBox Height="600" HorizontalAlignment="Left" Margin="0,0,0,0" Name="lbWatch" VerticalAlignment="Top" Width="430" ItemsSource="{Binding videos}" SelectionChanged="lbWatch_SelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17" Width="200">
+                                <Image Source="{Binding thumbnail}" Height="150" Width="180" />
+                                <TextBlock Text="{Binding title}" TextWrapping="Wrap" Width="180" FontSize="25" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+
+            <!--Panorama item three-->
+            <controls:PanoramaItem Header="watch later" Margin="0,0,-50,0" FontSize="12">
+                <TextBlock Height="254" HorizontalAlignment="Left" Margin="50,80,0,0" Name="tbEmptyWarning" Text="Your Playlist is empty. Click Watch later to add some videos." VerticalAlignment="Top" Width="342" FontSize="32" TextWrapping="Wrap" />
+          
+            </controls:PanoramaItem>
+
+            <!--Panorama item Settings-->
+            <controls:PanoramaItem Header="settings" Margin="0,0,-50,0" FontSize="12">
+                <ListBox>
+                    <!--popular-->
+                    <toolkit:ToggleSwitch Header="" Margin="30,0,0,0" Name="tsPopular" SwitchForeground="#FFF09609">
+                        <toolkit:ToggleSwitch.ContentTemplate>
+                            <DataTemplate>                                
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="popular" Width="110" Margin="30, -10, 100, -10"/>
+                                </StackPanel>                                
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.ContentTemplate>
+                    </toolkit:ToggleSwitch>
+
+                    <!--news-->
+                    <toolkit:ToggleSwitch Header="" Margin="30,0,0,0" Name="tsNews" SwitchForeground="#FFF09609" Height="120">
+                        <toolkit:ToggleSwitch.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="news" Width="110" Margin="30, 0, 100, 5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.ContentTemplate>
+                    </toolkit:ToggleSwitch>
+
+                    <!--comedy-->
+                    <toolkit:ToggleSwitch Header="" Margin="30,0,0,0" Name="tsComedy" SwitchForeground="#FFF09609" Height="120">
+                        <toolkit:ToggleSwitch.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="comedy" Width="110" Margin="30, 0, 100, 5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.ContentTemplate>
+                    </toolkit:ToggleSwitch>
+
+                    <!--classics-->
+                    <toolkit:ToggleSwitch Header="" Margin="30,0,0,0" Name="tsClassics" SwitchForeground="#FFF09609" Height="120">
+                        <toolkit:ToggleSwitch.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="classics" Width="110"  Margin="30, 0, 100, 5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.ContentTemplate>
+                    </toolkit:ToggleSwitch>
+
+                    <!--tech-->
+                    <toolkit:ToggleSwitch Header="" Margin="30,0,0,0" Name="tsTech" SwitchForeground="#FFF09609" Height="120">
+                        <toolkit:ToggleSwitch.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="tech" Width="110" Margin="30, 0, 100, 5" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.ContentTemplate>
+                    </toolkit:ToggleSwitch>
+
+                    <!--business-->
+                    <toolkit:ToggleSwitch Header="" Margin="30,0,0,0" Name="tsBusiness" SwitchForeground="#FFF09609" Height="120">
+                        <toolkit:ToggleSwitch.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="business" Width="110" Margin="30, 0, 100, 5" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:ToggleSwitch.ContentTemplate>
+                    </toolkit:ToggleSwitch>
+
+
+                </ListBox>
+            </controls:PanoramaItem>
+
+            <!--Panorama item stats-->
+            <controls:PanoramaItem Header="your stats" Margin="0,0,-50,0" FontSize="12">
+                <ListBox Name="lbStats" Margin="20,0,0,0">
+                    <TextBlock Text="total time" FontSize="30" FontFamily="Segoe WP Light" />
+                    <TextBlock Text="45 hours 8 min 16 s" FontSize="45" Margin="0,0,0,30" Name="tbTime" />
+
+                    <TextBlock Text="videos watched" FontSize="30" FontFamily="Segoe WP Light" />
+                    <TextBlock Text="211" FontSize="45" Margin="0,0,0,30" Name="tbVideos" />
+
+                    <TextBlock Text="total likes" FontSize="30" FontFamily="Segoe WP Light" />
+                    <TextBlock Text="34" FontSize="45" Margin="0,0,0,30" Name="tbLikes" />
+
+                    <TextBlock Text="world ranking" FontSize="30" FontFamily="Segoe WP Light" />
+                    <TextBlock Text="45 hours 8 min 16 s" FontSize="45" Margin="0,0,0,30" Name="tbRanking" />
+                </ListBox>
+            </controls:PanoramaItem>
+
+        </controls:Panorama>
+        
+    </Grid>
+
+    <!--Application Bar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/Images/search_btn.png" Text="Search" Click="AppBarIconSearch_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/Images/setting_btn.png" Text="Setting" Click="AppBarIconSetting_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Search"/>
+                <shell:ApplicationBarMenuItem Text="Setting"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

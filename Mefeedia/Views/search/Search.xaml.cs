@@ -102,5 +102,14 @@ namespace Mefeedia.Views.search
                 NavigationService.Navigate(new Uri("/Watch?idx=" + index.ToString(), UriKind.Relative));
             }
         }
+
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                wc_todo("http://m.mefeedia.com/search/" + tbSearch.Text + "/json?p=2&rpp=15");
+            }
+        
+        }
     }
 }

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:Controls="clr-namespace:MyToolkit.Controls;assembly=MyToolkit" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -37,7 +38,7 @@
                     <Button Content="next" BorderThickness="0" FontSize="50" FontFamily="Segoe WP Light" Margin="20, 0,0,0" Name="btnNext" Click="btnNext_Click" />
                 </StackPanel>
                 <StackPanel>
-                    <Image Name="imgThumb" Margin="10,10,10,10" Height="250"  Source="{Binding thumbnail}" Tap="imgThumb_Tap" />                                     
+                    <Image Name="imgThumb" Margin="10,10,10,10" Height="250"  Source="{Binding thumbnail}" Tap="imgThumb_Tap" />                    
                 </StackPanel>
                 <StackPanel>
                     <TextBlock Name="tbDescription" Margin="5,0,5,0" Text="Title of the video spread across 2 lines endi..." HorizontalAlignment="Center" FontSize="25" TextAlignment="Center" TextWrapping="Wrap" />

@@ -31,7 +31,7 @@
                 </StackPanel>
             </controls:Panorama.Title>            
             
-            <!--Panorama item one-->
+            <!--Panorama item one MENU-->
             <controls:PanoramaItem Header="menu" Margin="0,0,-50,0" FontSize="12">
                 <!--Double line list with text wrapping-->
                 <ListBox  Margin="0,80,-12,0" ItemsSource="{Binding Items}"  SelectionChanged="MenuListBox_SelectionChanged" Name="menuListBox">
@@ -46,7 +46,7 @@
                 </ListBox>
             </controls:PanoramaItem>
 
-            <!--Panorama item two-->
+            <!--Panorama item two WATCH-->
             <controls:PanoramaItem Header="watch" Margin="0,0,-50,0" FontSize="12">
                 <ListBox Height="600" HorizontalAlignment="Left" Margin="0,0,0,0" Name="lbWatch" VerticalAlignment="Top" Width="430" ItemsSource="{Binding videos}" SelectionChanged="lbWatch_SelectionChanged">
                     <ListBox.ItemsPanel>
@@ -58,20 +58,39 @@
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" Width="200">
                                 <Image Source="{Binding thumbnail}" Height="150" Width="180" />
-                                <TextBlock Text="{Binding title}" TextWrapping="Wrap" Width="180" FontSize="25" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding title}" TextWrapping="Wrap" Width="180" FontSize="25" />
+                                </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </controls:PanoramaItem>
 
-            <!--Panorama item three-->
+            <!--Panorama item three WATCH LATER-->
             <controls:PanoramaItem Header="watch later" Margin="0,0,-50,0" FontSize="12">
-                <TextBlock Height="254" HorizontalAlignment="Left" Margin="50,80,0,0" Name="tbEmptyWarning" Text="Your Playlist is empty. Click Watch later to add some videos." VerticalAlignment="Top" Width="342" FontSize="32" TextWrapping="Wrap" />
-          
+                <!--<TextBlock Height="254" HorizontalAlignment="Left" Margin="50,80,0,0" Name="tbEmptyWarning" Text="Your Playlist is empty. Click Watch later to add some videos." VerticalAlignment="Top" Width="342" FontSize="32" TextWrapping="Wrap" /> -->
+                <ListBox Height="600" HorizontalAlignment="Left" Margin="0,0,0,0" Name="lbWatchLater" VerticalAlignment="Top" Width="430" ItemsSource="{Binding laterVideos}" SelectionChanged="lbWatchLater_SelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel  Orientation="Horizontal" Margin="0,0,0,17" Width="400">
+                                <Image Source="{Binding thumbnail}" Height="150" Width="180" Margin="0,10,10,10" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding title}" TextWrapping="Wrap" Width="200" FontSize="25" Margin="10,0,0,0" />
+                                    <TextBlock Text="{Binding description}" TextWrapping="Wrap" Width="220" FontSize="15" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </controls:PanoramaItem>
 
-            <!--Panorama item Settings-->
+            <!--Panorama item four SETTINGS-->
             <controls:PanoramaItem Header="settings" Margin="0,0,-50,0" FontSize="12">
                 <ListBox>
                     <!--popular-->
@@ -144,20 +163,20 @@
                 </ListBox>
             </controls:PanoramaItem>
 
-            <!--Panorama item stats-->
+            <!--Panorama item five STATS-->
             <controls:PanoramaItem Header="your stats" Margin="0,0,-50,0" FontSize="12">
                 <ListBox Name="lbStats" Margin="20,0,0,0">
                     <TextBlock Text="total time" FontSize="30" FontFamily="Segoe WP Light" />
-                    <TextBlock Text="45 hours 8 min 16 s" FontSize="45" Margin="0,0,0,30" Name="tbTime" />
+                    <TextBlock Text="0 s" FontSize="45" Margin="0,0,0,30" Name="tbTime" />
 
                     <TextBlock Text="videos watched" FontSize="30" FontFamily="Segoe WP Light" />
-                    <TextBlock Text="211" FontSize="45" Margin="0,0,0,30" Name="tbVideos" />
+                    <TextBlock Text="0" FontSize="45" Margin="0,0,0,30" Name="tbVideos" />
 
                     <TextBlock Text="total likes" FontSize="30" FontFamily="Segoe WP Light" />
-                    <TextBlock Text="34" FontSize="45" Margin="0,0,0,30" Name="tbLikes" />
+                    <TextBlock Text="0" FontSize="45" Margin="0,0,0,30" Name="tbLikes" />
 
                     <TextBlock Text="world ranking" FontSize="30" FontFamily="Segoe WP Light" />
-                    <TextBlock Text="45 hours 8 min 16 s" FontSize="45" Margin="0,0,0,30" Name="tbRanking" />
+                    <TextBlock Text="0 s" FontSize="45" Margin="0,0,0,30" Name="tbRanking" />
                 </ListBox>
             </controls:PanoramaItem>
 

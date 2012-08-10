@@ -230,7 +230,7 @@ namespace Mefeedia
                 {
                     //save device id as user id.                
                     IsolatedStorageHelper.SaveObject("deviceID", App.deviceID);
-                    MessageBox.Show("user register success!");
+                   // MessageBox.Show("user register success!");
                 }
                 
             }

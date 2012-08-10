@@ -23,7 +23,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox Height="72" HorizontalAlignment="Left" Margin="8,44,0,0" Name="tbSearch" Text="video title" VerticalAlignment="Top" Width="442" Foreground="#55000000" GotFocus="tbSearch_GotFocus" />
+            <TextBox InputScope="Search" KeyDown="SearchBox_KeyDown" Height="72" HorizontalAlignment="Left" Margin="8,44,0,0" Name="tbSearch" Text="video title" VerticalAlignment="Top" Width="442" Foreground="#55000000" GotFocus="tbSearch_GotFocus" />
             <Button Content="relevance" Height="86" HorizontalAlignment="Left" Margin="25,122,0,0" Name="btnRelevance" VerticalAlignment="Top" Width="229" BorderThickness="0" FontSize="40" Click="btnRelevance_Click" />
             <Button BorderThickness="0" Content="date" FontSize="40" Height="86" HorizontalAlignment="Right" Margin="0,122,23,0" Name="btnDate" VerticalAlignment="Top" Width="173" Click="btnDate_Click" />
             <ListBox Height="484" HorizontalAlignment="Left" Margin="25,234,0,0" Name="lbResults" VerticalAlignment="Top" Width="408" SelectionChanged="lbResults_SelectionChanged">

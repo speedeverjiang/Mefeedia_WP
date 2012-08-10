@@ -40,7 +40,7 @@ namespace Mefeedia
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
 
-        // Load data for the ViewModel Itemsss
+        // Load data for the ViewModel Item
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (!App.ViewModel.IsDataLoaded)
@@ -78,19 +78,31 @@ namespace Mefeedia
                 wc_todo(uri);
             }
             else if (selIndex == 1) //watch later
-            { 
+            {
+                List<vData> laterVideos = new List<vData>();
+                laterVideos.Clear();
+                Uris.Clear();
+
                 // Read items
                 int count = IsolatedStorageHelper.GetObject<int>("WatchLaterItemCount");
                 for (int i = 0; i < count; i++) 
                 {
-                    /*vData item;
+                    vData item = new vData();
+                    item.id = IsolatedStorageHelper.GetObject<string>("id" + i);
                     item.title = IsolatedStorageHelper.GetObject<string>("title" + i);
                     item.description = IsolatedStorageHelper.GetObject<string>("description" + i);
+                    if (item.description.Length > 200)
+                    {
+                        item.description = item.description.Substring(0, 200);
+                        item.description += "...";
+                    }
                     item.thumbnail = IsolatedStorageHelper.GetObject<string>("thumb" + i);
                     item.friendlydate = IsolatedStorageHelper.GetObject<string>("friendlyDate" + i);
                     item.mobile = IsolatedStorageHelper.GetObject<string>("mobile" + i);
-                    App.videolist.Add(item);*/
+                    laterVideos.Add(item);
+                    Uris.Add(item.mobile);
                 }
+                lbWatchLater.ItemsSource = laterVideos;
 
             }
             else if (selIndex == 4) //stats
@@ -135,13 +147,16 @@ namespace Mefeedia
             {
                 if(selIndex == 0)//watch
                 {
-                    string tmpData = "{\"items\":"+c.Result+"}";
+                    string tmp = c.Result;
+                    int f = tmp.IndexOf("[");
+                    string tmpData = "{\"items\":"+c.Result.Substring(f)+"}";
 
                     //var o = JObject.Parse(c.Result);
                     var o = JObject.Parse(tmpData);
                     var videos = from v in o["items"].Children() 
                                  select new vData 
                                 { 
+                                    id = (string)v["globalid"],
                                     title = (string)v["nice_title"], 
                                     description = (string)v["nice_text"], 
                                     thumbnail = (string)v["selected_thumb_url_320x240"], 
@@ -152,6 +167,7 @@ namespace Mefeedia
                     lbWatch.ItemsSource = videos;
 
                     App.videolist.Clear();
+                    Uris.Clear();
                     foreach (var vid in videos)
                     {
                         App.videolist.Add(vid);
@@ -175,7 +191,7 @@ namespace Mefeedia
         }
 
         //Application Bar click handler
-        private void AppBarIconSearch_Click(object sender, EventArgs e)             
+        private void AppBarIconSearch_Click(object sender, EventArgs e)       
         {
             NavigationService.Navigate(new Uri("/Search", UriKind.Relative));
         }
@@ -209,5 +225,40 @@ namespace Mefeedia
             //
             NavigationService.Navigate(new Uri("/Watch?idx=" + selIndex.ToString(), UriKind.Relative));
         }
+
+        //watch later list item clicked
+        private void lbWatchLater_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selIndex = lbWatchLater.SelectedIndex;
+            String id = IsolatedStorageHelper.GetObject<string>("id" + selIndex);
+            String title = IsolatedStorageHelper.GetObject<string>("title" + selIndex);
+            String vidUrl = IsolatedStorageHelper.GetObject<string>("mobile" + selIndex);
+            String escapedVidUrl = Uri.EscapeDataString(vidUrl);
+            //get youtube id from the vidUrl
+            if (vidUrl != "")
+            {
+                int youtubeidPos = vidUrl.IndexOf("?v=");
+                if (youtubeidPos < 0)
+                    youtubeidPos = vidUrl.IndexOf("&v=");
+                if (youtubeidPos >= 0)
+                {
+                    String subTemp = vidUrl.Substring(youtubeidPos + 3);
+                    int nextparamPos = subTemp.IndexOf("&");
+                    if (nextparamPos >= 0)
+                    {
+                        String youtubeid = subTemp.Substring(0, nextparamPos);
+                        id = youtubeid;
+                    }
+                    else
+                    {
+                        id = subTemp;
+                    }
+                }
+            }
+            //..
+            NavigationService.Navigate(new Uri("/Player?id=" + id + "&title=" + title + "&url=" + escapedVidUrl, UriKind.Relative));
+            //NavigationService.Navigate(new Uri("/Watch?idx=" + selIndex.ToString(), UriKind.Relative));
+        }
+
     }
 }

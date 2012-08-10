@@ -199,18 +199,93 @@ namespace Mefeedia.Views.watch
         //video play
         private void imgThumb_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            String id = App.videolist[curVidIndex].id;
             String title = App.videolist[curVidIndex].title;
             String vidUrl = App.videolist[curVidIndex].mobile;
-            NavigationService.Navigate(new Uri("/Player?title="+ title + "&url=" + vidUrl, UriKind.Relative));
+            String escapedVidUrl = Uri.EscapeDataString(vidUrl);
+
+            //get youtube id from the vidUrl
+            if (vidUrl != "")
+            {
+                int youtubeidPos = vidUrl.IndexOf("?v=");
+                if (youtubeidPos < 0)
+                    youtubeidPos = vidUrl.IndexOf("&v=");
+                if (youtubeidPos >= 0)
+                {
+                    String subTemp = vidUrl.Substring(youtubeidPos + 3);
+                    int nextparamPos = subTemp.IndexOf("&");
+                    if (nextparamPos >= 0)
+                    {
+                        String youtubeid = subTemp.Substring(0, nextparamPos);
+                        id = youtubeid;
+                    }
+                    else 
+                    {
+                        id = subTemp;
+                    }
+                }
+            }
+            //..
+
+            NavigationService.Navigate(new Uri("/Player?id=" + id + "&title=" + title + "&url=" + escapedVidUrl, UriKind.Relative));
         }
 
         //watch later
         private void btnWatchLater_Click(object sender, RoutedEventArgs e)
         {
             int count = IsolatedStorageHelper.GetObject<int>("WatchLaterItemCount");
-            IsolatedStorageHelper.SaveObject("WatchLaterItemCount", count++);
-
             vData curVideo = App.videolist[curVidIndex];
+            String id = curVideo.id;
+            bool bFind = false;
+            for (int i = 0; i < count; i++)
+            {
+                String strI = i.ToString();
+                String itemId = IsolatedStorageHelper.GetObject<string>("id"+i);
+                if (itemId == id)
+                { 
+                    //already exist.
+                    bFind = true;
+                    //remove item.
+                    IsolatedStorageHelper.DeleteObject("id" + strI);
+                    IsolatedStorageHelper.DeleteObject("title" + strI);
+                    IsolatedStorageHelper.DeleteObject("description" + strI);
+                    IsolatedStorageHelper.DeleteObject("thumb" + strI);
+                    IsolatedStorageHelper.DeleteObject("friendlyDate" + strI);
+                    IsolatedStorageHelper.DeleteObject("mobile" + strI);
+                }  
+
+                if(bFind)
+                {
+                    if (i == count - 1)
+                    {
+                        IsolatedStorageHelper.DeleteObject("id" + strI);
+                        IsolatedStorageHelper.DeleteObject("title" + strI);
+                        IsolatedStorageHelper.DeleteObject("description" + strI);
+                        IsolatedStorageHelper.DeleteObject("thumb" + strI);
+                        IsolatedStorageHelper.DeleteObject("friendlyDate" + strI);
+                        IsolatedStorageHelper.DeleteObject("mobile" + strI);
+
+                    }
+                    else
+                    {
+                        IsolatedStorageHelper.SaveObject("id" + i, IsolatedStorageHelper.GetObject<string>("id" + (strI + 1)));
+                        IsolatedStorageHelper.SaveObject("title" + i, IsolatedStorageHelper.GetObject<string>("title" + (strI + 1)));
+                        IsolatedStorageHelper.SaveObject("description" + i, IsolatedStorageHelper.GetObject<string>("description" + (strI + 1)));
+                        IsolatedStorageHelper.SaveObject("thumb" + i, IsolatedStorageHelper.GetObject<string>("thumb" + (strI + 1)));
+                        IsolatedStorageHelper.SaveObject("friendlyDate" + i, IsolatedStorageHelper.GetObject<string>("friendlyDate" + (strI + 1)));
+                        IsolatedStorageHelper.SaveObject("mobile" + i, IsolatedStorageHelper.GetObject<string>("mobile" + (strI + 1)));
+                    }
+                }
+            }
+
+            if (bFind)
+            {
+                IsolatedStorageHelper.SaveObject("WatchLaterItemCount", --count);
+                string removeMsg = "Removed from 'Watch Later'!";
+                MessageBox.Show(removeMsg);
+                return;
+            }
+
             String title = curVideo.title;
             String description = curVideo.description;
             String thumb = curVideo.thumbnail;
@@ -218,11 +293,17 @@ namespace Mefeedia.Views.watch
             String vidUrl = curVideo.mobile;
 
             string strIndex = count.ToString();
+            IsolatedStorageHelper.SaveObject("id" + strIndex, id);
             IsolatedStorageHelper.SaveObject("title"+strIndex, title);
             IsolatedStorageHelper.SaveObject("description" + strIndex, description);
             IsolatedStorageHelper.SaveObject("thumb" + strIndex, thumb);
             IsolatedStorageHelper.SaveObject("friendlyDate" + strIndex, friendlyDate);
             IsolatedStorageHelper.SaveObject("mobile" + strIndex, vidUrl);
+
+            IsolatedStorageHelper.SaveObject("WatchLaterItemCount", ++count);
+
+            string addMsg = "Added to 'Watch Later'!";
+            MessageBox.Show(addMsg);
         }
 
         //like
